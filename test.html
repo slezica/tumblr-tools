@@ -1,0 +1,42 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+First gist:
+<a class="gist" href="https://gist.github.com/2757069.js?file=tumblr-gist.js"></a>
+
+Second gist:
+<a class="gist" href="https://gist.github.com/2748698.js?file=order.py"></a>
+
+Third gist:
+<a class="gist" href="https://gist.github.com/2748698.js?file=test_order.py"></a>
+
+<script>
+var real_docwrite = document.write,
+    body = $('body');
+
+(function insertGists(a_tags) {
+    if (a_tags.length > 0) {
+        a_tag = a_tags.shift()
+
+        document.write = function(stylesheet) {
+            $('head').append(stylesheet);
+        
+            document.write = function(gist) {
+                $(a_tag).replaceWith(gist)
+                insertGists(a_tags);
+            }
+        }
+        
+        body.append('<scr' + 'ipt src="' + a_tag.href + '"></scr' + 'ipt>');
+        
+    } else
+        document.write = real_docwrite;
+        
+})($('a.gist').get());
+
+</script>
+</body>
+</html>
