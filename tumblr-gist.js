@@ -9,18 +9,25 @@
  * embed
  */
 
-var real_docwrite = document.write;
+var real_docwrite = document.write,
+    body = $('body');
 
-$('a.gist').each(function(i, a_tag) {
-    document.write = function(stylesheet) {
-        $('head').append(stylesheet);
+(function insertGists(a_tags) {
+    if (a_tags.length > 0) {
+        a_tag = a_tags.shift()
 
-        document.write = function(gist) {
-            $(a_tag).replaceWith(gist)
+        document.write = function(stylesheet) {
+            $('head').append(stylesheet);
+        
+            document.write = function(gist) {
+                $(a_tag).replaceWith(gist)
+                insertGists(a_tags);
+            }
         }
-    }
-
-    $('body').append('<scr' + 'ipt src="' + a_tag.href + '"></scr' + 'ipt>');
-});
-
-document.write = real_docwrite;
+        
+        body.append('<scr' + 'ipt src="' + a_tag.href + '"></scr' + 'ipt>');
+        
+    } else
+        document.write = real_docwrite;
+        
+})($('a.gist').get());
