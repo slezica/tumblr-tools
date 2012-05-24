@@ -13,30 +13,14 @@ Second gist:
 Third gist:
 <a class="gist" href="https://gist.github.com/2748698.js?file=test_order.py"></a>
 
-<script>
-var real_docwrite = document.write,
-    body = $('body');
+<a class="stylesheet">
+    a { color: red; }
+</a>
 
-(function insertGists(a_tags) {
-    if (a_tags.length > 0) {
-        a_tag = a_tags.shift()
+<a class="script">
+    document.write('heeey');
+</a>
 
-        document.write = function(stylesheet) {
-            $('head').append(stylesheet);
-        
-            document.write = function(gist) {
-                $(a_tag).replaceWith(gist)
-                insertGists(a_tags);
-            }
-        }
-        
-        body.append('<scr' + 'ipt src="' + a_tag.href + '"></scr' + 'ipt>');
-        
-    } else
-        document.write = real_docwrite;
-        
-})($('a.gist').get());
-
-</script>
+<script type="text/javascript" src="tumblr-tools.js"></script>
 </body>
 </html>
